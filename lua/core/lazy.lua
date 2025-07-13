@@ -32,7 +32,7 @@ M.setup = function()
     -- 安装时使用的配色方案
     install = { colorscheme = { 'tokyonight' } },
     -- 启用自动更新检查
-    checker = { enabled = true },
+    checker = { enabled = false },
   }
 
   lazy.setup(opts)
