@@ -27,6 +27,7 @@ M.setup = function()
     spec = {
       -- 导入插件
       { import = 'plugins' },
+      { import = 'plugins.lsp' },
       { import = 'plugins.colorscheme' },
     },
     -- 安装时使用的配色方案

@@ -4,7 +4,7 @@ M.build = ':TSUpdate'
 
 M.config = function()
   local opts = {}
-  opts.ensure_installed = { 'vim', 'lua', 'css', 'scss', 'html', 'javascript', 'typescript', 'tsx', 'json', 'vue' }
+  opts.ensure_installed = { 'vim', 'lua', 'css', 'scss', 'html', 'javascript', 'typescript', 'tsx', 'json', 'vue', 'php' }
 
   opts.sync_install = false
 
