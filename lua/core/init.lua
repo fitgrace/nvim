@@ -1,8 +1,6 @@
 local leaderMap = function()
-  -- 设置全局 Leader
-  vim.g.mapleader = ','
-  -- 设置本地 Leader
-  vim.g.maplocalleader = ','
+  vim.g.mapleader = ','       -- 设置全局 Leader
+  vim.g.maplocalleader = ','  -- 设置本地 Leader
 end
 
 local colorScheme = function()

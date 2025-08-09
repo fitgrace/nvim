@@ -12,7 +12,10 @@
 
 ## Language Server Protocal
 
-LSP 是微软开发 VSCode 提出的，其定义了一套标准编辑器和 language server 之间的规范。
+> The Language Server Protocol (LSP) defines the protocol used between an editor or IDE and a language server that provides language features like auto complete, go to definition, find all references etc. The goal of the Language Server Index Format (LSIF, pronounced like “else if”) is to support rich code navigation in development tools or a Web UI without needing a local copy of the source code.
+> 语言服务器协议（LSP）定义了编辑器或IDE与语言服务器之间使用的协议，该协议提供了诸如自动完成、转到定义、查找所有参考文献等语言功能。语言服务器索引格式（LSIF，发音类似于 “else if”）的目标是在开发工具或Web UI中支持丰富的代码导航，而不需要源代码的本地拷贝。
+
+简单的来说，LSP 是一个协议，Language Server 可以通过这个协议给 IDE 或者文本编辑器（比如Neovim、VScode等），提供诸如自动补全，定义跳转等功能。总体而言，LSP 定义了一个简单的服务器-客户端模型。
 
 1. 不同的语言需要不同的 Language Server，比如 C/C++ 需要 clangd, Rust 语言采用 rust analyzer, 官方列举了很多 lsp servers。
 2. 不同的编辑按照 lsp 的规范和 language server 通信
@@ -28,6 +31,9 @@ LSP 是微软开发 VSCode 提出的，其定义了一套标准编辑器和 lang
    |     Visual Studio Code   |     |                     |
    +--------------------------+     +---------------------+
 ```
+
+目的：实现类似 IDE 的智能提示、语法检查和解析、悬停文档等交互体验。
+
 
 ## Async
 
@@ -70,40 +76,27 @@ Nvim 的配置目录在 ~/.config/nvim 下。在 Linux/Mac 系统上，Nvim 会�
 `bash
 # Neovim 目录结构
 .  
-├── init.lua             # 主入口文件，负责加载核心配置和插件管理器  
-├── lazy-lock.json       # 插件版本锁定文件（由 Lazy.nvim 自动生成维护）  
-├── LICENSE              # 许可证文件（若配置开源）  
-├── lua/                 # Lua 配置模块目录（Neovim 标准配置结构）  
-│   ├── core/         # 基础功能配置模块  
-│   │   ├── init.lua    # 入口
+├── init.lua        # 主入口文件，负责加载核心配置和插件管理器  
+├── lazy-lock.json  # 插件版本锁定文件（由 Lazy.nvim 自动生成维护）  
+├── LICENSE         # 许可证文件（若配置开源）  
+├── lua/            # Lua 配置模块目录（Neovim 标准配置结构）  
+│   ├── core/       # 基础功能配置模块  
+│   │   ├── init.lua     # 入口
 │   │   ├── keymaps.lua  # 快捷键映射配置  
-│   │   ├── lazy.lua  # 插件管理器 Lazy.nvim 的配置  
-│   │   └── options.lua     # 基础设置（行号/缩进/颜色等）
+│   │   ├── lazy.lua     # 插件管理器 Lazy.nvim 的配置  
+│   │   └── options.lua  # 基础设置（行号/缩进/颜色等）
 │   └── plugins/         # 各插件独立配置文件  
-│       ├── alpha.lua    # 启动页插件 (alpha-nvim)  
-│       ├── autopairs.lua # 自动括号补全 (nvim-autopairs)  
-│       ├── avante.lua   # AI 编程
-│       ├── catppuccin.lua # Catppuccin 主题插件  
-│       ├── cmp.lua       # 代码补全引擎 (nvim-cmp)  
-│       ├── comment.lua  # 注释插件 (Comment.nvim)  
-│       ├── conform.lua  # 代码格式化插件 (conform.nvim)  
-│       ├── fzf.lua      # 模糊搜索插件 (fzf-lua)  
-│       ├── gitsigns.lua # Git 状态标记 (gitsigns.nvim)  
-│       ├── go-vim.lua   # Go 语言开发插件（如 go.nvim）  
-│       ├── gruvbox.lua  # Gruvbox 主题插件  
-│       ├── guess-indent.lua # 自动检测缩进插件  
-│       ├── indent-blankline.lua # 缩进参考线插件  
-│       ├── lsp.lua      # LSP 客户端核心配置  
-│       ├── lualine.lua  # 状态栏插件 (lualine.nvim)  
-│       ├── markdown.lua # Markdown 增强支持  
-│       ├── neo-tree.lua # 文件树插件 (neo-tree.nvim)  
-│       ├── notify.lua   # 通知系统插件 (nvim-notify)  
-│       ├── root.lua     # 根目录检测插件（可能结合 LSP），可自动切换至根目录
-│       ├── toggleterm.lua # 内嵌终端插件  
-│       ├── tokyonight.lua # Tokyo Night 主题插件  
-│       ├── treesitter.lua # 语法高亮 (nvim-treesitter)  
-│       └── which-key.lua # 快捷键提示插件  
-└── README.md            # 项目说明文档（配置说明/快捷键备忘等）  
+│       ├── colorscheme/ # 配色
+│       │   ├── catppuccin.lua
+│       │   ├── gruvbox.lua
+│       │   └── tokyonight.lua
+│       ├── lsp/
+│       │   ├── init.lua     # 入口
+│       │   └── options.lua  # 基础设置（行号/缩进/颜色等）
+│       ├── neo-tree.lua     # 文件树插件 (neo-tree.nvim)  
+│       ├── treesitter.lua   # 语法高亮 (nvim-treesitter)  
+│       └── which-key.lua    # 快捷键提示插件  
+└── README.md
 `
 
 ## 插件管理器
@@ -116,12 +109,6 @@ nvim-treesitter 插件提供基于 tree-sitter 的多个基础功能，它可以
 
 ## LSP 配置
 
-> The Language Server Protocol (LSP) defines the protocol used between an editor or IDE and a language server that provides language features like auto complete, go to definition, find all references etc. The goal of the Language Server Index Format (LSIF, pronounced like “else if”) is to support rich code navigation in development tools or a Web UI without needing a local copy of the source code.
-> 语言服务器协议（LSP）定义了编辑器或IDE与语言服务器之间使用的协议，该协议提供了诸如自动完成、转到定义、查找所有参考文献等语言功能。语言服务器索引格式（LSIF，发音类似于 “else if”）的目标是在开发工具或Web UI中支持丰富的代码导航，而不需要源代码的本地拷贝。
-
-简单的来说，LSP 是一个协议，Language Server 可以通过这个协议给 IDE 或者文本编辑器（比如Neovim、VScode等），提供诸如自动补全，定义跳转等功能。总体而言，LSP 定义了一个简单的服务器-客户端模型。
-
-目的：实现类似 IDE 的智能提示、语法检查和解析、悬停文档等交互体验。
 
 ## 值得一看的配置
 
