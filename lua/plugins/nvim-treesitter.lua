@@ -1,10 +1,11 @@
 local M = { 'nvim-treesitter/nvim-treesitter' }
 
 M.build = ':TSUpdate'
+M.cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' }
 
 M.config = function()
   local opts = {}
-  opts.ensure_installed = { 'vim', 'lua', 'css', 'scss', 'html', 'javascript', 'typescript', 'tsx', 'json', 'vue', 'php' }
+  opts.ensure_installed = { 'vim', 'lua', 'bash', 'css', 'scss', 'html', 'javascript', 'typescript', 'tsx', 'json', 'json5', 'vue', 'php' }
 
   opts.sync_install = false
 

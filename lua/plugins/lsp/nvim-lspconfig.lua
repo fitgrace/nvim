@@ -26,7 +26,8 @@ M.config = function()
     },
   })
 
-  lspconfig.ts_ls.setup({})
+  -- lspconfig.ts_ls.setup({})
+  -- lspconfig.vue_ls.setup({})
 
 end
 
